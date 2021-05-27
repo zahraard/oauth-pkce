@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { AuthProvider, AuthService } from 'react-oauth2-pkce'
 
-function App() {
+import { Routes } from './Routes';
+
+const authService = new AuthService({
+clientId:'67ca68c2-812f-4613-9f99-2ccfe7d27b35',
+location: window.location,
+provider: 'https://cufed.carleton.ca/adfs/oauth2/',
+redirectUri: window.location.origin,
+scopes: ['openid', 'profile']
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AuthProvider authService={authService} >
+      <Routes />
+    </AuthProvider>
+  )
 }
 
-export default App;
+export default App
+
